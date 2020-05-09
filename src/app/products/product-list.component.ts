@@ -9,10 +9,25 @@ import { IProduct } from './product';
 })
 export class ProductListComponent implements OnInit{
     pageTitle: String = 'Product List';
-    imageWidth: number = 50;
-    imageMargin: number = 2;
+    imageWidth: number = 20;
+    imageMargin: number = 5;
     showImage: boolean = false;
-    listFilter: string = 'cart';
+    filteredProducts : IProduct[];
+
+    constructor(){
+        this.filteredProducts = this.products;
+        this.listFilter = 'cart';
+    }
+    _listFilter: string;
+    get listFilter():string{
+        return this._listFilter;
+    }
+
+    set listFilter(value:string){
+        this._listFilter = value;
+        this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+    }
+
     products: IProduct[] = [
         {
             "productId": 1,
@@ -42,5 +57,11 @@ export class ProductListComponent implements OnInit{
 
     ngOnInit():void {
         console.log("Inside ngOnInit");
+    }
+
+    performFilter(filterBy:string): IProduct[]{
+
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.products.filter((product:IProduct) => product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 }
