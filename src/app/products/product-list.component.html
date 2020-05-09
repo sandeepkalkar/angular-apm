@@ -6,13 +6,13 @@
         <div class="row">
             <div class="col-md-2">Filter by:</div>
             <div class="div-md-4">
-                <input type="text"/>
+                <input type="text" [(ngModel)]='listFilter'/>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h4>Filtered by:</h4>
+            <h4>Filtered by: {{listFilter}}</h4>
         </div>
     </div>
     <div class="table-responsive">
@@ -20,8 +20,9 @@
             <thead>
                 <tr>
                     <th>
-                        <button class="btn btn-primary">
-                            Show Image
+                        <button class="btn btn-primary"
+                        (click)='toggelImage()'>
+                            {{showImage ? 'Hide' : 'Show'}} Image
                         </button>
                     </th>
                     <th>Product</th>
@@ -36,7 +37,8 @@
                     <td><img [src]='product.imageUrl'
                         [title]='product.productName'
                         [style.width.px]='imageWidth'
-                        [style.margin.px]='imageMargin'></td>
+                        [style.margin.px]='imageMargin'
+                        *ngIf='showImage'></td>
                     <td>{{product.productName}}</td>
                     <td>{{product.productCode}}</td>
                     <td>{{product.releaseDate}}</td>
